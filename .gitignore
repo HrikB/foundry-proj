@@ -1,2 +1,9 @@
 cache/
 out/
+lib/
+
+artifacts
+typechain
+node_modules
+
+.env
