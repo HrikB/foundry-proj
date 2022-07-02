@@ -8,6 +8,7 @@ import "@nomiclabs/hardhat-ethers";
 import "@nomiclabs/hardhat-waffle";
 import "@nomiclabs/hardhat-etherscan";
 import "@openzeppelin/hardhat-upgrades";
+import "@shardlabs/starknet-hardhat-plugin";
 import "hardhat-deploy";
 import "hardhat-deploy-ethers";
 import "hardhat-preprocessor";
