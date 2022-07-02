@@ -4,10 +4,11 @@ pragma solidity ^0.8.0;
 contract BasicToken {
     uint256 totalSupply_;
     mapping(address => uint256) balances;
+    uint256 constant initialSupply = 1000;
 
-    constructor(uint256 _initialSupply) {
-        totalSupply_ = _initialSupply;
-        balances[msg.sender] = _initialSupply;
+    constructor(uint256 initialSup) {
+        totalSupply_ = initialSup;
+        balances[msg.sender] = initialSup;
     }
 
     function totalSupply() public view returns (uint256) {
@@ -24,5 +25,9 @@ contract BasicToken {
 
     function balanceOf(address _owner) public view returns (uint256) {
         return balances[_owner];
+    }
+
+    function whatIsTheMeaningOfLife() external pure returns (uint256) {
+        return 0x42;
     }
 }
