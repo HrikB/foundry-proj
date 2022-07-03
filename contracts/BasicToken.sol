@@ -17,7 +17,7 @@ contract BasicToken {
 
     function transfer(address _to, uint256 _value) public returns (bool) {
         require(_to != address(0));
-        require(_value <= balances[msg.sender]);
+        // require(_value <= balances[msg.sender]);
         balances[msg.sender] = balances[msg.sender] - _value;
         balances[_to] = balances[_to] + _value;
         return true;
@@ -27,7 +27,7 @@ contract BasicToken {
         return balances[_owner];
     }
 
-    function whatIsTheMeaningOfLife() external pure returns (uint256) {
-        return 0x42;
-    }
+    // function whatIsTheMeaningOfLife() external pure returns (uint256) {
+    //     return 0x42;
+    // }
 }
