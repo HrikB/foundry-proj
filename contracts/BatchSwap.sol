@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.7.6;
+pragma solidity ^0.8.0;
 pragma abicoder v2;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
-import "@openzeppelin/contracts/utils/Pausable.sol";
-import "@openzeppelin/contracts/math/SafeMath.sol";
+import "@openzeppelin/contracts/security/Pausable.sol";
+import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
 import "@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol";
 
@@ -120,7 +120,8 @@ contract BatchSwap is Ownable, Pausable, IERC721Receiver, IERC1155Receiver {
     mapping(uint256 => bool) punkInUse;
 
     address public TRADESQUAD = 0xdbD4264248e2f814838702E0CB3015AC3a7157a1;
-    address payable public VAULT = 0xdbD4264248e2f814838702E0CB3015AC3a7157a1;
+    address payable public VAULT =
+        payable(0xdbD4264248e2f814838702E0CB3015AC3a7157a1);
 
     mapping(address => address) dappRelations;
 
@@ -222,7 +223,7 @@ contract BatchSwap is Ownable, Pausable, IERC721Receiver, IERC1155Receiver {
                 "Not enought WEI for handle the transaction"
             );
 
-        _swapIntent.addressOne = msg.sender;
+        _swapIntent.addressOne = payable(msg.sender);
         _swapIntent.id = _swapIds.current();
         _swapIntent.swapStart = block.timestamp;
         _swapIntent.swapEnd = 0;
@@ -355,7 +356,9 @@ contract BatchSwap is Ownable, Pausable, IERC721Receiver, IERC1155Receiver {
                 "Not enought WEI for handle the transaction"
             );
 
-        swapList[_swapCreator][swapMatch[_swapId]].addressTwo = msg.sender;
+        swapList[_swapCreator][swapMatch[_swapId]].addressTwo = payable(
+            msg.sender
+        );
         swapList[_swapCreator][swapMatch[_swapId]].swapEnd = block.timestamp;
         swapList[_swapCreator][swapMatch[_swapId]].status = swapStatus.Closed;
 
@@ -514,7 +517,7 @@ contract BatchSwap is Ownable, Pausable, IERC721Receiver, IERC1155Receiver {
         );
         //Rollback
         if (swapList[msg.sender][swapMatch[_swapId]].swapFee > 0)
-            msg.sender.transfer(
+            payable(msg.sender).transfer(
                 swapList[msg.sender][swapMatch[_swapId]].swapFee
             );
         uint256 i;
