@@ -12,6 +12,7 @@ import "@shardlabs/starknet-hardhat-plugin";
 import "hardhat-deploy";
 import "hardhat-deploy-ethers";
 import "hardhat-preprocessor";
+import "solidity-coverage";
 import fs from "fs";
 
 import dotenv from "dotenv";

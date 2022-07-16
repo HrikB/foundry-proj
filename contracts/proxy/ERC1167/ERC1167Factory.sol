@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import {ClonesUpgradeable} from '@openzeppelin/contracts-upgradeable/proxy/ClonesUpgradeable.sol';
-import {ContextUpgradeable} from '@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol';
-import '@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol';
+import {ClonesUpgradeable} from "@openzeppelin/contracts-upgradeable/proxy/ClonesUpgradeable.sol";
+import {ContextUpgradeable} from "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol";
 
 /**
  * @dev ERC1167 Minimal Proxy Factory
@@ -13,11 +13,18 @@ contract ERC1167Factory is ContextUpgradeable {
 
     event NewClone(address instance, address implementation, bytes32 salt);
 
-    function clone(address implementation, bytes memory data) public returns (address instance) {
+    function clone(address implementation, bytes memory data)
+        public
+        returns (address instance)
+    {
         instance = ClonesUpgradeable.clone(implementation);
 
         //data is optional
-        if (data.length > 0) instance.functionCall(data, 'ERC1167Factory: Failed to call the proxy');
+        if (data.length > 0)
+            instance.functionCall(
+                data,
+                "ERC1167Factory: Failed to call the proxy"
+            );
 
         emit NewClone(instance, implementation, bytes32(0));
     }
@@ -32,7 +39,11 @@ contract ERC1167Factory is ContextUpgradeable {
         instance = ClonesUpgradeable.cloneDeterministic(implementation, salt);
 
         //data is optional
-        if (data.length > 0) instance.functionCall(data, 'ERC1167Factory: Failed to call the proxy');
+        if (data.length > 0)
+            instance.functionCall(
+                data,
+                "ERC1167Factory: Failed to call the proxy"
+            );
 
         emit NewClone(instance, implementation, salt);
     }
@@ -44,6 +55,9 @@ contract ERC1167Factory is ContextUpgradeable {
     ) public view returns (address predicted) {
         //Salt init data
         salt = keccak256(abi.encodePacked(salt, _msgSender(), data));
-        predicted = ClonesUpgradeable.predictDeterministicAddress(implementation, salt);
+        predicted = ClonesUpgradeable.predictDeterministicAddress(
+            implementation,
+            salt
+        );
     }
 }
