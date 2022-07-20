@@ -12,7 +12,7 @@ contract BasicTokenTest is Test {
     uint256 constant sendAmount = 50;
 
     function setUp() public {
-        basicToken = new BasicToken(initialBalance);
+        basicToken = new BasicToken();
     }
 
     function testTotalSupply() public {
